@@ -3,6 +3,7 @@ import '../service/service_method.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   final Widget child;
@@ -39,12 +40,15 @@ class _HomePageState extends State<HomePage> {
              List<Map> swiper=(data['data']['slides'] as List).cast();
              List<Map> navgatorList=(data['data']['category'] as List).cast();
              String adPicture=data['data']['advertesPicture']['PICTURE_ADDRESS'];
+             String leaderImage=data['data']['shopInfo']['leaderImage'];
+             String leaderPhone=data['data']['shopInfo']['leaderPhone'];
 
              return Column(
                children: <Widget>[
                 SwiperDiy(swiperDateList:swiper),
                 TopNavigator(navigatorList: navgatorList),
-                AdBanner(adPicture:adPicture)
+                AdBanner(adPicture:adPicture),
+                LeaderPhone(leaderImage: leaderImage,leaderPhone: leaderPhone,),
                ],
              );
           }else{
@@ -133,4 +137,34 @@ class AdBanner extends StatelessWidget {
       child: Image.network(adPicture),
     );
   }
+}
+
+// 店长电话模块
+class LeaderPhone extends StatelessWidget {
+  final String leaderImage;             //店长图片
+  final String leaderPhone;             //店长电话
+
+  LeaderPhone({Key key, this.leaderImage,this.leaderPhone}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: (){_launchURL();},
+        child: Image.network(leaderImage),
+      )
+    );
+  }
+
+  //拨打电话
+  void _launchURL() async{
+    String url='tel:'+'13868548597';    //电话
+    // String url='http://jspang.com';       //网页
+    if(await canLaunch(url)){     //判断是否可以发射
+      await launch(url);  
+    }else{
+      throw '不能进行访问';
+    }
+  }
+
 }
