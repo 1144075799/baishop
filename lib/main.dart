@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import './pages/index_page.dart';
 import 'package:provide/provide.dart';
 import './provide/counter.dart';
+import './provide/child_category.dart';
 
 void main(){
   ///
@@ -14,9 +15,12 @@ void main(){
   ]);
 
   var counter=Counter();
+  var childCategory=ChildCategory();
   var providers=Providers();
 
-  providers..provide(Provider<Counter>.value(counter));   //添加依赖  多个状态就是这里增加
+  providers
+  ..provide(Provider<Counter>.value(counter))                     //添加依赖 
+  ..provide(Provider<ChildCategory>.value(childCategory));
 
   runApp(ProviderNode(child: MyApp(),providers: providers,));
 }
