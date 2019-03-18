@@ -84,7 +84,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
         height: ScreenUtil().setHeight(100),
         padding: EdgeInsets.only(left: 10,top: 20),
         decoration: BoxDecoration(
-          color: isClick?Colors.black26:Colors.white,
+          color: isClick?Color.fromRGBO(236, 236, 236, 1.0):Colors.white,
           border: Border( 
             bottom: BorderSide(width: 1,color: Colors.black12)      //设置底边
           )
@@ -101,7 +101,7 @@ class _LeftCatgegoryNavState extends State<LeftCatgegoryNav> {
       setState(() {
         list=category.data;
       });
-      // list.data.forEach((item)=>print(item.mallCategoryName));
+      Provide.value<ChildCategory>(context).getChildCategory(list[0].bxMallSubDto);
     });
   }
 }
