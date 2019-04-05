@@ -1,16 +1,13 @@
-class DetailsModle {
+class DetailsModel {
   String code;
   String message;
-  DetailsModle data;
-
-  DetailsModle({this.code, this.message, this.data});
-
-  DetailsModle.fromJson(Map<String, dynamic> json) {
+  DetailsGoodsData data;
+  DetailsModel({this.code, this.message, this.data});
+  DetailsModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = json['data'] != null ? new DetailsModle.fromJson(json['data']) : null;
+    data = json['data'] != null ? new DetailsGoodsData.fromJson(json['data']) : null;
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
@@ -21,14 +18,11 @@ class DetailsModle {
     return data;
   }
 }
-
 class DetailsGoodsData {
   GoodInfo goodInfo;
   List<GoodComments> goodComments;
   AdvertesPicture advertesPicture;
-
   DetailsGoodsData({this.goodInfo, this.goodComments, this.advertesPicture});
-
   DetailsGoodsData.fromJson(Map<String, dynamic> json) {
     goodInfo = json['goodInfo'] != null
         ? new GoodInfo.fromJson(json['goodInfo'])
@@ -43,7 +37,6 @@ class DetailsGoodsData {
         ? new AdvertesPicture.fromJson(json['advertesPicture'])
         : null;
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.goodInfo != null) {
@@ -58,7 +51,6 @@ class DetailsGoodsData {
     return data;
   }
 }
-
 class GoodInfo {
   String image5;
   int amount;
@@ -69,14 +61,13 @@ class GoodInfo {
   String image1;
   String image2;
   String goodsSerialNumber;
-  int oriPrice;
+  double oriPrice;
   double presentPrice;
   String comPic;
   int state;
   String shopId;
   String goodsName;
   String goodsDetail;
-
   GoodInfo(
       {this.image5,
       this.amount,
@@ -94,7 +85,6 @@ class GoodInfo {
       this.shopId,
       this.goodsName,
       this.goodsDetail});
-
   GoodInfo.fromJson(Map<String, dynamic> json) {
     image5 = json['image5'];
     amount = json['amount'];
@@ -113,7 +103,6 @@ class GoodInfo {
     goodsName = json['goodsName'];
     goodsDetail = json['goodsDetail'];
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['image5'] = this.image5;
@@ -135,22 +124,18 @@ class GoodInfo {
     return data;
   }
 }
-
 class GoodComments {
   int sCORE;
   String comments;
   String userName;
   int discussTime;
-
   GoodComments({this.sCORE, this.comments, this.userName, this.discussTime});
-
   GoodComments.fromJson(Map<String, dynamic> json) {
     sCORE = json['SCORE'];
     comments = json['comments'];
     userName = json['userName'];
     discussTime = json['discussTime'];
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['SCORE'] = this.sCORE;
@@ -160,18 +145,14 @@ class GoodComments {
     return data;
   }
 }
-
 class AdvertesPicture {
   String pICTUREADDRESS;
   String tOPLACE;
-
   AdvertesPicture({this.pICTUREADDRESS, this.tOPLACE});
-
   AdvertesPicture.fromJson(Map<String, dynamic> json) {
     pICTUREADDRESS = json['PICTURE_ADDRESS'];
     tOPLACE = json['TO_PLACE'];
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['PICTURE_ADDRESS'] = this.pICTUREADDRESS;
