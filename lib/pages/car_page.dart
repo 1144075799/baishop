@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../provide/cart.dart';
 import './car_page/car_items.dart';
+import './car_page/car_bottom.dart';
 
 class CarPage extends StatelessWidget {
   @override
@@ -15,11 +16,21 @@ class CarPage extends StatelessWidget {
         builder: (context,snapshot){
           if(snapshot.hasData){
             List cartList=Provide.value<CartProvide>(context).cartList;
-            return ListView.builder(
-              itemCount: cartList.length,
-              itemBuilder: (context,index){
-                return CartItem(cartList[index]);
-              },
+
+            return Stack(
+              children: <Widget>[
+                  ListView.builder(
+                    itemCount: cartList.length,
+                    itemBuilder: (context,index){
+                      return CartItem(cartList[index]);
+                    },
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: CarButtom(),
+                  )
+              ],
             );
           }else{
             return Text('正在加载....');
