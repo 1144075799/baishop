@@ -7,6 +7,10 @@ class CartProvide with ChangeNotifier{
   String cartString="[]";
   List<CartInfoModel> cartList=[];
 
+  double allPrice=0;      //总价
+  int allGoodsCount=0;    //商品总数量
+
+
   save(goodsId,goodsName,count,price,images) async{
     SharedPreferences preferences=await SharedPreferences.getInstance();      //初始化
     cartString=preferences.getString('cartInfo');                             //取值
@@ -29,7 +33,8 @@ class CartProvide with ChangeNotifier{
           'goodsName':goodsName,
           'count':count,
           'price':price,
-          'images':images
+          'images':images,
+          'isCheck':true
         };
         tempList.add(newGoods);
         cartList.add(CartInfoModel.fromJson(newGoods));                       //map数据转化为json
@@ -61,12 +66,39 @@ class CartProvide with ChangeNotifier{
        cartList=[];
      }else{
        List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
+       allPrice=0;
+       allGoodsCount=0;
        tempList.forEach((item){
+
+         if(item['isCheck']){
+           allPrice+=(item['count']*item['price']);
+           allGoodsCount+=item['count'];
+         }
+
          cartList.add(CartInfoModel.fromJson(item));                          //转变对象形式
        });
      }
 
      notifyListeners();
+  }
+
+  // 删除单个购物车商品
+  deleteOneGoods(String goodsId) async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    cartString=preferences.getString('cartInfo');
+    List<Map> tempList=(json.decode(cartString.toString()) as List).cast();
+    int tempIndex=0;
+    int delIndex=0;
+    tempList.forEach((item){
+      if(item['goodsId']==goodsId){
+        delIndex=tempIndex;
+      }
+      tempIndex++;
+    });
+    tempList.removeAt(delIndex);
+    cartString=json.encode(tempList).toString();
+    preferences.setString('cartInfo', cartString);
+    await getCartInfo();
   }
 
 }
